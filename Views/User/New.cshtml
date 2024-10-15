@@ -1,0 +1,54 @@
+﻿@model User
+
+<partial name="General" />
+<form method="post">
+	<div>
+		<label asp-for="FName"></label>
+		<input asp-for="FName" class="form-control" />
+		<span asp-validation-for="FName" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="LName"></label>
+		<input asp-for="LName" class="form-control" />
+		<span asp-validation-for="LName" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Username"></label>
+		<input asp-for="Username" class="form-control" />
+		<span asp-validation-for="Username" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="PhoneNumber"></label>
+		<input type="tel" asp-for="PhoneNumber" class="form-control" />
+		<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Email"></label>
+		<input type="email" asp-for="Email" class="form-control" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Password"></label>
+		<input type="password" asp-for="Password" class="form-control" />
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Gender"></label>
+		<select asp-for="Gender" class="form-control">
+			<option value="0">Male</option>
+			<option value="1">Female</option>
+		</select>
+		<span asp-validation-for="Gender" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Address"></label>
+		<input asp-for="Address" class="form-control" />
+		<span asp-validation-for="Address" class="text-danger"></span>
+	</div>
+	<partial name="SubmitButton" />
+	@* <button type="submit" class="btn btn-outline-success">Submit</button> *@
+</form>
+<a asp-action="Index" asp-controller="User" class="btn btn-danger">Cancel</a>
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -51,6 +51,20 @@ namespace Mailo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -224,6 +238,30 @@ namespace Mailo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeeContacts",
+                columns: table => new
+                {
+                    ContactID = table.Column<int>(type: "int", nullable: false),
+                    EmpID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeContacts", x => new { x.ContactID, x.EmpID });
+                    table.ForeignKey(
+                        name: "FK_EmployeeContacts_Contact_ContactID",
+                        column: x => x.ContactID,
+                        principalTable: "Contact",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EmployeeContacts_Employees_EmpID",
+                        column: x => x.EmpID,
+                        principalTable: "Employees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
@@ -394,6 +432,11 @@ namespace Mailo.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeeContacts_EmpID",
+                table: "EmployeeContacts",
+                column: "EmpID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_EmpID",
                 table: "Order",
                 column: "EmpID");
@@ -456,6 +499,9 @@ namespace Mailo.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "EmployeeContacts");
+
+            migrationBuilder.DropTable(
                 name: "OrderProduct");
 
             migrationBuilder.DropTable(
@@ -469,6 +515,9 @@ namespace Mailo.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Contact");
 
             migrationBuilder.DropTable(
                 name: "Order");

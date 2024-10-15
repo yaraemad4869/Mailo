@@ -23,5 +23,7 @@ namespace Mailo.Models
 		public Gender Gender { get; set; }
 		public DateTime HiringDate { get; set; }
 		public ICollection<Order>? orders { get; set; }
-	}
+		public ICollection<EmployeeContact> employeeContacts {  get; set; }
+
+    }
 }

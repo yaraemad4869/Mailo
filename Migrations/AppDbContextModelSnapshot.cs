@@ -22,6 +22,29 @@ namespace Mailo.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Mailo.Models.Contact", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Contact", (string)null);
+                });
+
             modelBuilder.Entity("Mailo.Models.Employee", b =>
                 {
                     b.Property<int>("ID")
@@ -70,6 +93,21 @@ namespace Mailo.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Mailo.Models.EmployeeContact", b =>
+                {
+                    b.Property<int>("ContactID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmpID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContactID", "EmpID");
+
+                    b.HasIndex("EmpID");
+
+                    b.ToTable("EmployeeContacts");
                 });
 
             modelBuilder.Entity("Mailo.Models.Order", b =>
@@ -312,6 +350,7 @@ namespace Mailo.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
@@ -514,6 +553,25 @@ namespace Mailo.Migrations
                     b.ToTable("User", (string)null);
                 });
 
+            modelBuilder.Entity("Mailo.Models.EmployeeContact", b =>
+                {
+                    b.HasOne("Mailo.Models.Contact", "contact")
+                        .WithMany("employeeContacts")
+                        .HasForeignKey("ContactID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Mailo.Models.Employee", "employee")
+                        .WithMany("employeeContacts")
+                        .HasForeignKey("EmpID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("contact");
+
+                    b.Navigation("employee");
+                });
+
             modelBuilder.Entity("Mailo.Models.Order", b =>
                 {
                     b.HasOne("Mailo.Models.Employee", "employee")
@@ -661,8 +719,15 @@ namespace Mailo.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Mailo.Models.Contact", b =>
+                {
+                    b.Navigation("employeeContacts");
+                });
+
             modelBuilder.Entity("Mailo.Models.Employee", b =>
                 {
+                    b.Navigation("employeeContacts");
+
                     b.Navigation("orders");
                 });
 

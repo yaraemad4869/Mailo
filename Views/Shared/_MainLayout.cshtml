@@ -19,14 +19,37 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area=""asp-page="Home/About">About</a>
+                         </li>
+                        @* for admin *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
+                        </li>
+                        @* for user *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Home">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="Home">Search</a>
+                            </li>
+                        
+                        @* for null user *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Sign up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-action="Login" asp-controller="User">Login</a>
+                        </li>
+                        @* for non-null user *@
+                        <li class="nav-item">
+                            <button type="button">
+                                <a class="nav-link text-dark" asp-area="" asp-action="Index" asp-controller="User">Logout</a>
+                            </button>
                         </li>
                     </ul>
                 </div>

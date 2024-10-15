@@ -1,0 +1,57 @@
+﻿@model User
+@{
+	ViewData["Title"] = "Edit User";
+}
+<form method="post" asp-action="Edit">
+	<input asp-for="Id" hidden />
+	<input asp-for="RegistrationDate" hidden />
+	<input asp-for="UserType" hidden />
+	<div>
+		<label asp-for="FName"></label>
+		<input asp-for="FName" class="form-control" />
+		<span asp-validation-for="FName" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="LName"></label>
+		<input asp-for="LName" class="form-control" />
+		<span asp-validation-for="LName" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Username"></label>
+		<input asp-for="Username" class="form-control" />
+		<span asp-validation-for="Username" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="PhoneNumber"></label>
+		<input asp-for="PhoneNumber" class="form-control" />
+		<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Email"></label>
+		<input asp-for="Email" class="form-control" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Password"></label>
+		<input asp-for="Password" class="form-control" />
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Gender"></label>
+		<select asp-for="Gender" class="form-control">
+			<option value="0">Male</option>
+			<option value="1">Female</option>
+		</select>
+		<span asp-validation-for="Gender" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Address"></label>
+		<input asp-for="Address" class="form-control" />
+		<span asp-validation-for="Address" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-outline-success">Submit</button>
+</form>
+<a asp-action="Index" asp-controller="User" class="btn btn-danger">Cancel</a>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

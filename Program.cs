@@ -3,10 +3,18 @@ using Mailo.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Mailo.Models;
+using Mailo.IRepo;
+using Mailo.Repo;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+// Other service registrations
+
+//builder.Services.AddScoped(typeof(BasicRepo<>), typeof(BasicRepo<>)); // Register generic repository
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(ILoginRepo), typeof(LoginRepo));
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddIdentity<Mailo.Models.User, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()

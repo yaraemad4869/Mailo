@@ -6,6 +6,7 @@ using Mailo.Data.Enums;
 using Mailo.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Mailo.Models;
 
 namespace Mailo.Data
 {
@@ -25,10 +26,11 @@ namespace Mailo.Data
 			modelBuilder.Entity<Review>().ToTable("Review");
 			modelBuilder.Entity<Payment>().ToTable("Payment");
 			modelBuilder.Entity<Wishlist>().ToTable("Wishlist");
+            modelBuilder.Entity<Contact>().ToTable("Contact");
 
-			#region M:M Tables
+            #region M:M Tables
 
-			modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.OrderID, op.ProductID });
+            modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.OrderID, op.ProductID });
 			modelBuilder.Entity<OrderProduct>()
 		   .HasOne(op => op.order)
 		   .WithMany(o => o.OrderProducts)
@@ -60,6 +62,16 @@ namespace Mailo.Data
 				.HasOne(r => r.product)
 				.WithMany(p => p.reviews)
 				.HasForeignKey(r => r.ProductID);
+            modelBuilder.Entity<EmployeeContact>().HasKey(ec => new { ec.ContactID, ec.EmpID });
+            modelBuilder.Entity<EmployeeContact>()
+           .HasOne(ec => ec.contact)
+           .WithMany(c => c.employeeContacts)
+           .HasForeignKey(ec => ec.ContactID);
+
+            modelBuilder.Entity<EmployeeContact>()
+                .HasOne(ec => ec.employee)
+                .WithMany(e => e.employeeContacts)
+                .HasForeignKey(ec => ec.EmpID);
 
             #endregion
 
@@ -76,10 +88,11 @@ namespace Mailo.Data
             modelBuilder.Entity<User>()
             .HasIndex(u => u.Username)
             .IsUnique();
-            #endregion
+			#endregion
 
-            #region Computed Attributes
-            modelBuilder.Entity<Product>().Property(x => x.TotalPrice).HasComputedColumnSql("[Price]-([Discount]/100)*[Price]");
+			#region Computed Attributes
+			modelBuilder.Entity<User>().Property(u => u.Id).ValueGeneratedOnAdd();
+			modelBuilder.Entity<Product>().Property(x => x.TotalPrice).HasComputedColumnSql("[Price]-([Discount]/100)*[Price]");
             modelBuilder.Entity<User>()
             .Property(u => u.FullName)
             .HasComputedColumnSql("[FName] + ' ' + [LName]");
@@ -110,6 +123,7 @@ namespace Mailo.Data
         public DbSet<Review>Reviews { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeContact> EmployeeContacts { get; set; }
         #endregion
     }
 }

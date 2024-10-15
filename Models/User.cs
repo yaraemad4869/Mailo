@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -14,8 +15,7 @@ namespace Mailo.Models
 {
     public class User : IdentityUser
     {
-        //[Key]
-        //public int ID { get; set; }
+        
         [MaxLength(20)]
 		[DisplayName("First Name")]
 		public string FName { get; set; }

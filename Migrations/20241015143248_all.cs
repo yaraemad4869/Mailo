@@ -270,11 +270,11 @@ namespace Mailo.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DeliveryFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OrderAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     OrderStatus = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EmpID = table.Column<int>(type: "int", nullable: false)
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    EmpID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

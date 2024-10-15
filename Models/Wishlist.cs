@@ -10,6 +10,6 @@ namespace Mailo.Models
 		[ForeignKey("product")]
 		public int ProductID { get; set; }
 		public Product product { get; set; }
-		public DateTime AdditionDate { get; set; }
+		public DateTime AdditionDate { get; set; } = DateTime.Now;
 	}
 }

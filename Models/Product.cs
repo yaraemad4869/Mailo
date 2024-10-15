@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mailo.Data.Enums;
 
 namespace Mailo.Models
 {
@@ -26,7 +27,7 @@ namespace Mailo.Models
         public int Quantity { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal Price { get; set; }
-
+        public Sizes Sizes { get; set; }
         public ICollection<Review>? reviews { get; set; }
 		public ICollection<OrderProduct>? OrderProducts { get; set; }
         public ICollection<Wishlist>? wishlists { get; set; }

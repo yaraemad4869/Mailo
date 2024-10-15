@@ -99,16 +99,19 @@ namespace Mailo.Data
             modelBuilder.Entity<Employee>()
             .Property(e => e.FullName)
             .HasComputedColumnSql("[FName] + ' ' + [LName]");
+            modelBuilder.Entity<Order>()
+            .Property(e => e.TotalPrice)
+            .HasComputedColumnSql("[OrderPrice] + ' ' + [DeliveryFee]");
             #endregion
 
-   //         #region User Data
-   //         modelBuilder.Entity<User>()
-			//	.HasData(
-			//		new User { ID = 1, FName = "Yara", LName = "Emad Eldien", Username = "Yara_Emad4869", PhoneNumber = "+201127769084", Email = "Yara.Emad4869@gmail.com", Password = "YaraEmad4869", Gender = Gender.Female, UserType = UserType.Client, Address = "Al-Rawda Street, Off the Nile Courniche, Beni Suef" }
-			//	);
-			//#endregion
-			
-			foreach (var rel in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //         #region User Data
+            //         modelBuilder.Entity<User>()
+            //	.HasData(
+            //		new User { ID = 1, FName = "Yara", LName = "Emad Eldien", Username = "Yara_Emad4869", PhoneNumber = "+201127769084", Email = "Yara.Emad4869@gmail.com", Password = "YaraEmad4869", Gender = Gender.Female, UserType = UserType.Client, Address = "Al-Rawda Street, Off the Nile Courniche, Beni Suef" }
+            //	);
+            //#endregion
+
+            foreach (var rel in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
 			{
 				rel.DeleteBehavior = DeleteBehavior.Restrict;
 			}

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mailo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241015055323_all")]
-    partial class all
+    [Migration("20241015145034_edits1")]
+    partial class edits1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,12 +124,7 @@ namespace Mailo.Migrations
                     b.Property<decimal>("DeliveryFee")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("DiscountCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("EmpID")
+                    b.Property<int?>("EmpID")
                         .HasColumnType("int");
 
                     b.Property<string>("OrderAddress")
@@ -146,8 +141,12 @@ namespace Mailo.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalPrice")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("decimal(18,2)")
+                        .HasComputedColumnSql("[OrderPrice] + ' ' + [DeliveryFee]");
+
                     b.Property<string>("UserID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
@@ -580,14 +579,12 @@ namespace Mailo.Migrations
                     b.HasOne("Mailo.Models.Employee", "employee")
                         .WithMany("orders")
                         .HasForeignKey("EmpID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Mailo.Models.User", "user")
                         .WithMany("orders")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("employee");
 

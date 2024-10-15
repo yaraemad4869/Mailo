@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,20 +14,31 @@ namespace Mailo.Models
 	{
 		[Key]
 		public int ID { get; set; }
+		[DisplayName("Order Date")]
 		public DateTime OrderDate { get; set; } = DateTime.Now;
-		public decimal OrderPrice { get; set; }
-		public decimal DeliveryFee { get; set; }
-		[MaxLength(20)]
-		public string DiscountCode { get; set; }
+        [DisplayName("Order Price")]
+
+        public decimal OrderPrice { get; set; }
+        [DisplayName("Delivery Fee")]
+
+        public decimal DeliveryFee { get; set; }
+        [DisplayName("Total Price")]
+
+        public decimal TotalPrice { get; set; }
+        
 		[MaxLength(100)]
-		public string OrderAddress { get; set; }
-		public OrderStatus OrderStatus { get; set; }
+        [DisplayName("Order Address")]
+
+        public string OrderAddress { get; set; }
+		[DisplayName("Order Status")]
+
+		public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
 		[ForeignKey("user")]
-		public string UserID { get; set; }
-		public User user { get; set; }
+		public string? UserID { get; set; }
+		public User? user { get; set; }
 		[ForeignKey("employee")]
-		public int EmpID { get; set; }
-		public Employee employee { get; set; }
+		public int? EmpID { get; set; }
+		public Employee? employee { get; set; }
 		public ICollection<OrderProduct>? OrderProducts { get; set; }
 
 	}

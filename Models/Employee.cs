@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Mailo.Data.Enums;
 
 namespace Mailo.Models
@@ -11,7 +12,7 @@ namespace Mailo.Models
 		public string FName { get; set; }
 		[MaxLength(20)]
 		public string LName { get; set; }
-        public string FullName { get; private set; }
+        public string? FullName { get; private set; }
 
         [MaxLength(12)]
 		public string PhoneNumber { get; set; }
@@ -21,9 +22,10 @@ namespace Mailo.Models
 		public string Password { get; set; }
 		[EnumDataType(typeof(Gender))]
 		public Gender Gender { get; set; }
-		public DateTime HiringDate { get; set; }
+		[DisplayName("Hiring Date")]
+		public DateTime HiringDate { get; set; } = DateTime.Now;
 		public ICollection<Order>? orders { get; set; }
-		public ICollection<EmployeeContact> employeeContacts {  get; set; }
+		public ICollection<EmployeeContact>? employeeContacts {  get; set; }
 
     }
 }

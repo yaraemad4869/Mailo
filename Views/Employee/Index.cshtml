@@ -1,40 +1,46 @@
-@model List<Employee>
+﻿@model List<Employee>
+
 @{
-	ViewData["Title"] = "Show Employees";
+    ViewData["Title"] = "Index";
 }
-<a asp-action="New" asp-controller="Employee" class="text-info text-decoration-underline">Add New Employee</a>
-<table class="table-bordered table-active table-striped table">
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th>Full Name</th>
-			<th>Phone Number</th>
-			<th>Email</th>
-			<th>Gender</th>
-			<th>Employee Role</th>
-			<th>Hiring Date</th>
-			<th>Delete</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (Employee e in Model)
-		{
 
-			<tr>
-				<td>@e.ID</td>
-				<td>@e.FName @e.LName</td>
-				<td>@e.PhoneNumber</td>
-				<td>@e.Email</td>
-				<td>@e.Gender</td>
-				<td>@e.HiringDate</td>
+<h1>Index</h1>
+<a asp-action="New">Add new Employee</a>
 
-				@* <td>
-			<a asp-action="Edit" asp-controller="User" asp-route-id="@u.ID">Edit</a>
-			</td> *@
-				<td>
-					<a asp-action="Delete" asp-controller="Employee" asp-route-id="@e.ID">Delete</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Hiring sDate</th>
+                <th>Edit</th>
+                <th>Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+    @foreach(Employee e in Model)
+    {
+        <tr>
+            <td>@e.FullName</td>
+            <td>@e.PhoneNumber</td>
+            <td>@e.Email</td>
+            <td>@e.Gender</td>
+            <td>@e.HiringDate</td>
+            <td>
+                        <a asp-action="Edit" asp-route-id="@e.ID">Edit</a> |
+
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@e.ID">Delete</a> |
+            </td>
+        </tr>
+       
+    }
+        </tbody>
+     </table>
+    
+</div>

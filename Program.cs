@@ -10,13 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-// Other service registrations
-
-//builder.Services.AddScoped(typeof(BasicRepo<>), typeof(BasicRepo<>)); // Register generic repository
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(ILoginRepo), typeof(LoginRepo));
+builder.Services.AddScoped(typeof(IWishlistRepo), typeof(Wishlist));
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
-builder.Services.AddIdentity<Mailo.Models.User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddSingleton<IEmailSender>(new EmailSender(

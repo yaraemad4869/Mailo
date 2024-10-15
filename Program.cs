@@ -11,7 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(builder.Config
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IWishlistRepo), typeof(Wishlist));
+builder.Services.AddScoped(typeof(IWishlistRepo), typeof(WishlistRepo));
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()

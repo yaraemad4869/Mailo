@@ -12,9 +12,9 @@ namespace Mailo.Controllers
     public class WishlistController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly IWishlistRepo _wishlist;
+        private readonly IAddToWishlistRepo _wishlist;
         private readonly IUnitOfWork _unitOfWork;
-        public WishlistController(UserManager<User> userManager, IWishlistRepo wishlist, IUnitOfWork unitOfWork)
+        public WishlistController(UserManager<User> userManager, IAddToWishlistRepo wishlist, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _wishlist = wishlist;

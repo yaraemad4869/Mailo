@@ -1,19 +1,34 @@
-﻿using Mailo.IRepo;
+﻿using Mailo.Data;
+using Mailo.IRepo;
 using Mailo.Models;
+using Mailo.Repo;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mailo.Controllers
 {
     public class OrderController : Controller
     {
+        private readonly UserManager<User> _userManager;
+        private readonly IAddToCartRepo _order;
         private readonly IUnitOfWork _unitOfWork;
-        public OrderController(IUnitOfWork unitOfWork)
+        public OrderController(UserManager<User> userManager, IAddToCartRepo order, IUnitOfWork unitOfWork)
         {
+            _userManager = userManager;
+            _order = order;
             _unitOfWork = unitOfWork;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _unitOfWork.orders.GetAll());
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            return View(await _order.GetProducts(await _order.GetOrders(user.Id)));
         }
         public async Task<IActionResult> New()
         {
@@ -21,57 +36,33 @@ namespace Mailo.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult New(Order order)
+        public async Task<IActionResult> New(int id)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                _unitOfWork.orders.Insert(order);
-                TempData["Success"] = "Order Has Been Added Successfully";
-                return RedirectToAction("Index");
+                return Unauthorized();
             }
-            return View(order);
-        }
-        public async Task<IActionResult> Edit(int id = 0)
-        {
-            if (id != 0)
-            {
-                return View(await _unitOfWork.orders.GetByID(id));
-            }
-            return NotFound();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.orders.Update(order);
-                TempData["Success"] = "Order Has Been Updated Successfully";
-                return RedirectToAction("Index");
-            }
-            return View(order);
-        }
-        public async Task<IActionResult> Delete(int id = 0)
-        {
-            if (id != 0)
-            {
-                return View(await _unitOfWork.orders.GetByID(id));
-            }
-            return NotFound();
-        }
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteOrder(int id = 0)
-        {
-            var order = await _unitOfWork.orders.GetByID(id);
-            if (id != 0 && order != null)
-            {
-                _unitOfWork.orders.Delete(order);
-                TempData["Success"] = "Order Has Been Deleted Successfully";
-                return RedirectToAction("Index");
-            }
-            return NotFound();
+            var existingWishlistItem = await _order.ExistingCartItem(id, user.Id);
+            //.FirstOrDefaultAsync(w => w.UserId == user.Id && w.ProductId == productId);
 
+            if (existingWishlistItem != null)
+            {
+                // If the product is already in the wishlist, you may want to return a message
+                return BadRequest("Product is already in the wishlist.");
+            }
+
+            // Add product to the wishlist
+            var wishlistItem = new Wishlist
+            {
+                UserID = user.Id,
+                ProductID = id
+            };
+
+            _unitOfWork.wishlists.Insert(wishlistItem);
+            TempData["Success"] = "Product Has Been Added Successfully";
+            return RedirectToAction("Index");
         }
     }
+
 }

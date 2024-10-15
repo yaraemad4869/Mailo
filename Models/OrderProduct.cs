@@ -18,8 +18,10 @@ namespace Mailo.Models
 		[ForeignKey("product")]
 		public int ProductID { get; set; }
 		public Product product { get; set; }
-		
 
-	}
+        //[ForeignKey("product")]
+        //public int UserID { get; set; }
+        //public User user { get; set; }
+    }
 }
 

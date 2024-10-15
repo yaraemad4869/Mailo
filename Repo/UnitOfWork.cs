@@ -23,7 +23,6 @@ namespace Mailo.Repo
 		public IBasicRepo<Order> orders { get; private set; }
 		public IBasicRepo<Product> products { get; private set; }
 		public IBasicRepo<Wishlist> wishlists { get; private set; }
-
 		public IBasicRepo<Review> reviews { get; private set; }
 
 		public IBasicRepo<Payment> payments { get; private set; }

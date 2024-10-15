@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Mailo.Data;
 using Mailo.IRepo;
+using Mailo.Models;
 
 namespace Mailo.Repo
 {
@@ -39,5 +40,6 @@ namespace Mailo.Repo
 			_db.Set<T>().Remove(entity);
 			_db.SaveChanges();
 		}
-	}
+        
+    }
 }

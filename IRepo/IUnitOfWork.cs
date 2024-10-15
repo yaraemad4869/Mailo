@@ -6,9 +6,9 @@ namespace Mailo.IRepo
 	{
 		IBasicRepo<User> users {  get; }
 		IBasicRepo<Employee> employees { get; }
-		IBasicRepo<Order> orders { get; }
+        IBasicRepo<Order> orders { get; }
 		IBasicRepo<Product> products { get; }
-		IBasicRepo<Wishlist> wishlists { get; }
+        IBasicRepo<Wishlist> wishlists { get; }
 		IBasicRepo<Review> reviews { get; }
 		IBasicRepo<Payment> payments { get; }
 		int CommitChanges();

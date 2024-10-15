@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mailo.Repo
 {
-    public class WishlistRepo : IWishlistRepo
+    public class AddToWishlistRepo : IAddToWishlistRepo
     {
         private readonly AppDbContext _db;
-        public WishlistRepo(AppDbContext db)
+        public AddToWishlistRepo(AppDbContext db)
         {
             _db = db;
         }
@@ -24,10 +24,9 @@ namespace Mailo.Repo
         }
         public async Task<Wishlist> ExistingWishlistItem(int id,string userId) {
             
-            return await _db.Wishlists
-            .FirstOrDefaultAsync(w => w.UserID == userId && w.ProductID == id);
+            return await _db.Wishlists.FirstOrDefaultAsync(w => w.UserID == userId && w.ProductID == id);
         }
-            
 
+        
     }
 }

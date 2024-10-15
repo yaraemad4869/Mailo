@@ -32,7 +32,7 @@ namespace Mailo.Models
         public string OrderAddress { get; set; }
 		[DisplayName("Order Status")]
 
-		public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
+		public OrderStatus OrderStatus { get; set; } = OrderStatus.New;
 		[ForeignKey("user")]
 		public string? UserID { get; set; }
 		public User? user { get; set; }

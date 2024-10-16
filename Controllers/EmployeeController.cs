@@ -1,6 +1,8 @@
-﻿using Mailo.IRepo;
+﻿using Mailo.Data.Enums;
+using Mailo.IRepo;
 using Mailo.Models;
 using Microsoft.AspNetCore.Mvc;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace Mailo.Controllers
 {
@@ -72,6 +74,30 @@ namespace Mailo.Controllers
             }
             return NotFound();
 
+        }
+        public async Task<IActionResult> AcceptOrder(int OrderId,int EmpId)
+        {
+            var order = await _unitOfWork.orders.GetByID(OrderId);
+            order.EmpID=EmpId;
+            
+            TempData["Success"] = "Order Has Been Accepted Successfully";
+            return RedirectToAction("Index");
+
+        }
+        public async Task<IActionResult> ViewOrders()
+        {
+            var orders = await _unitOfWork.orders.GetAll();
+            return View(orders.Where(o=>o.OrderStatus==OrderStatus.Pending && o.EmpID==null).ToList());  
+        }
+        public async Task<IActionResult> ViewRequiredOrders(int EmpId)
+        {
+            var orders = await _unitOfWork.orders.GetAll();
+            return View(orders.Where(o => o.EmpID == EmpId).ToList());
+        }
+        public async Task<IActionResult> EditOrder(Order order)
+        {
+            _unitOfWork.orders.Update(order);
+            return RedirectToAction("Index");
         }
     }
 }

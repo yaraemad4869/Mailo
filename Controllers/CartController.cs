@@ -72,7 +72,7 @@ namespace Mailo.Controllers
                 return BadRequest("Cart is already ordered.");
             }
             existingOrderItem.OrderStatus = OrderStatus.Pending;
-
+            existingOrderItem.DeliveryFee = 100;
             TempData["Success"] = "Cart Has Been Ordered Successfully";
             return RedirectToAction("Index");
         }

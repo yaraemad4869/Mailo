@@ -8,7 +8,7 @@ namespace Mailo.Repo
 {
 	public class BasicRepo<T> : IBasicRepo<T> where T : class
 	{
-		private readonly AppDbContext _db;
+		protected readonly AppDbContext _db;
 
         public BasicRepo(AppDbContext db)
         {

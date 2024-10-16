@@ -17,6 +17,7 @@ namespace Mailo.Repo
 			wishlists=new BasicRepo<Wishlist>(_db);
 			reviews=new BasicRepo<Review>(_db);
 			payments=new BasicRepo<Payment>(_db);
+			search=new SearchRepo(_db);
         }
 		public IBasicRepo<User> users { get; private set; }
 		public IBasicRepo<Employee> employees { get; private set; }
@@ -26,7 +27,7 @@ namespace Mailo.Repo
 		public IBasicRepo<Review> reviews { get; private set; }
 
 		public IBasicRepo<Payment> payments { get; private set; }
-
+		public ISearchRepo search { get; private set; }
 		public int CommitChanges()
 		{
 			return _db.SaveChanges();

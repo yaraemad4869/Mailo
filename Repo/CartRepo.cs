@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mailo.Repo
 {
-    public class AddToCartRepo : IAddToCartRepo
+    public class CartRepo : ICartRepo
     {
         private readonly AppDbContext _db;
-        public AddToCartRepo(AppDbContext db)
+        public CartRepo(AppDbContext db,IBasicRepo<Order> repo)
         {
             _db = db;
         }
@@ -26,14 +26,35 @@ namespace Mailo.Repo
         {
             return await _db.OrderProducts.FirstOrDefaultAsync(op => op.OrderID == order.ID && op.ProductID == id);
         }
-        public async Task<Order> GetOrders(string id)
+        public async Task<Order> GetOrder(string id)
         {
             return await _db.Orders.FirstOrDefaultAsync(o => o.UserID == id && o.OrderStatus == OrderStatus.New);
         }
         public async Task<OrderProduct> ExistingCartItem(int productId, string userId)
         {
-            return await IsMatched(await GetOrders(userId),productId);
-       }
-    }
+            return await IsMatched(await GetOrder(userId),productId);
+        }
+        public async void InsertToCart(int OrderId , int ProductId)
+        {
+            OrderProduct op = new OrderProduct
+            {
+                OrderID= OrderId,
+                ProductID= ProductId
+            };
+            
+            await _db.OrderProducts.AddAsync(op);
+            _db.SaveChanges();
+        }
+		public async void DeleteFromCart(int OrderId, int ProductId)
+		{
+			OrderProduct op = new OrderProduct
+			{
+				OrderID = OrderId,
+				ProductID = ProductId
+			};
+             _db.OrderProducts.Remove(op);
+			_db.SaveChanges();
+		}
+	}
 }
 

@@ -11,7 +11,9 @@ namespace Mailo.IRepo
         IBasicRepo<Wishlist> wishlists { get; }
 		IBasicRepo<Review> reviews { get; }
 		IBasicRepo<Payment> payments { get; }
-		int CommitChanges();
+        ISearchRepo search { get; }
+
+        int CommitChanges();
 
 	}
 }

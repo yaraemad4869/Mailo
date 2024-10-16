@@ -12,7 +12,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IAddToWishlistRepo), typeof(AddToWishlistRepo));
-builder.Services.AddScoped(typeof(IAddToCartRepo), typeof(AddToCartRepo));
+builder.Services.AddScoped(typeof(ICartRepo), typeof(CartRepo));
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();

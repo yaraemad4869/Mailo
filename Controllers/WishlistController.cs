@@ -63,6 +63,34 @@ namespace Mailo.Controllers
                 TempData["Success"] = "Product Has Been Added Successfully";
                 return RedirectToAction("Index");
             }
-        }
+        
+	public async Task<IActionResult> Delete(int id)
+	{
+		var user = await _userManager.GetUserAsync(User);
+		if (user == null)
+		{
+			return Unauthorized();
+		}
+		var existingWishlistItem = await _wishlist.ExistingWishlistItem(id, user.Id);
+		//.FirstOrDefaultAsync(w => w.UserId == user.Id && w.ProductId == productId);
+
+		if (existingWishlistItem == null)
+		{
+			// If the product is already in the wishlist, you may want to return a message
+			return BadRequest("Product is not in the wishlist.");
+		}
+
+		// Add product to the wishlist
+		var wishlistItem = new Wishlist
+		{
+			UserID = user.Id,
+			ProductID = id
+		};
+
+		_unitOfWork.wishlists.Delete(wishlistItem);
+		TempData["Success"] = "Product Has Been Added Successfully";
+		return RedirectToAction("Index");
+	}
+}
         
 }

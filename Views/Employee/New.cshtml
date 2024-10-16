@@ -12,6 +12,8 @@
     <div class="col-md-4">
         <form asp-action="New">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <input asp-for="UserType" type="hidden" value="2" />
+
             <div class="form-group">
                 <label asp-for="FName" class="control-label"></label>
                 <input asp-for="FName" class="form-control" />
